@@ -65,6 +65,7 @@ async def update_faculty_score(faculty_id: str, criterion_name: list):
     """Update the selected criteria for a faculty and auto-calculate score"""
     await scores_collection.update_one(
         {"faculty_id": faculty_id},
-        {"$set": {"criterion_name": criterion_name}}
+        {"$set": {"criterion_name": criterion_name, "score": 0.0}},
+        upsert=True
     )
     return True

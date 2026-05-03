@@ -1,7 +1,10 @@
-import os
 from motor.motor_asyncio import AsyncIOMotorClient
+import os
 
-MONGO_URI = "mongodb+srv://root:test1234@database.ohejniv.mongodb.net/?appName=database"
+MONGO_URI = os.getenv(
+    "MONGO_URI",
+    "mongodb+srv://root:test1234@database.ohejniv.mongodb.net/?appName=database",
+)
 
 client = AsyncIOMotorClient(MONGO_URI)
 
