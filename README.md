@@ -1,6 +1,6 @@
 # Staff Increment Management
 
-FastAPI + MongoDB web application for managing faculty records, appraisal criteria, score calculation, and PDF report generation.
+FastAPI + MongoDB backend with a React frontend for managing faculty records, appraisal criteria, score calculation, and PDF report generation.
 
 This README is based on the current implementation in the project files.
 
@@ -10,13 +10,15 @@ This README is based on the current implementation in the project files.
 - Maintains appraisal criteria with category, weight, and active/inactive status.
 - Assigns multiple criteria per faculty member and calculates total score from criterion weights.
 - Generates downloadable PDF reports for one faculty member or all faculty members.
-- Provides server-rendered pages using Jinja2 templates.
+- Provides JSON APIs for the React frontend.
+- Keeps the original Jinja2 templates available as legacy backend pages.
 
 ## Tech Stack
 
 - Backend: FastAPI
 - Database: MongoDB (Motor async client)
-- Templating: Jinja2
+- Frontend: React + Vite
+- Legacy Templating: Jinja2
 - PDF Generation: ReportLab
 - App Server: Uvicorn
 
@@ -54,17 +56,47 @@ Staff-Incriment-Management/
 		static/
 			css/style.css
 			js/script.js
+	frontend/
+		package.json
+		vite.config.js
+		src/
+			api/client.js
+			App.jsx
+			main.jsx
+			styles.css
+			pages/
+				FacultyPage.jsx
+				CriteriaPage.jsx
+				ScoresPage.jsx
 ```
 
 ## Application Flow
 
 1. `app/main.py` creates the FastAPI app, mounts static files, and includes route modules.
-2. Route files in `app/routes/` handle page rendering and form submissions.
+2. Route files in `app/routes/` handle legacy page rendering, form submissions, and JSON APIs.
 3. Service files in `app/services/` perform MongoDB CRUD and score logic.
 4. `app/config/database.py` provides Mongo client and collections.
-5. Templates in `app/templates/` render UI pages.
+5. React files in `frontend/src/` render the primary UI and call `/api/...` endpoints.
+6. Templates in `app/templates/` still render the older server-side pages.
 
 ## Routes and Pages
+
+### React API
+
+- `GET /api/faculty`
+- `POST /api/faculty`
+- `DELETE /api/faculty/{faculty_id}`
+- `GET /api/criteria`
+- `POST /api/criteria`
+- `PATCH /api/criteria/{criteria_id}/status?is_active=true|false`
+- `DELETE /api/criteria/{criteria_id}`
+- `GET /api/scores`
+- `PUT /api/scores/{faculty_id}`
+
+PDF endpoints remain the existing backend endpoints:
+
+- `GET /scores/pdf/{faculty_id}`
+- `GET /scores/pdf/all`
 
 ### Home
 
@@ -146,11 +178,25 @@ Replace it with your own MongoDB URI before running in your environment.
 
 ### 5. Run the app
 
+Start the backend:
+
 ```bash
-uvicorn app.main:app --reload
+.venv/bin/uvicorn app.main:app --reload
 ```
 
-Open:
+In another terminal, start the React frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open the React app:
+
+- `http://127.0.0.1:5173/`
+
+The legacy backend pages are still available at:
 
 - `http://127.0.0.1:8000/`
 
@@ -163,7 +209,7 @@ Open:
 
 ## Future Improvements
 
-- Move `MONGO_URI` to environment variables (for security and portability).
+- `MONGO_URI` can be set through the environment; the current hard-coded URI remains only as a fallback for compatibility with the original project.
 - Add validation rules and error handling for all form inputs.
 - Add edit/update routes for faculty and criteria.
 - Add tests for route and service layers.
