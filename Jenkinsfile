@@ -31,7 +31,11 @@ pipeline {
         stage('Backend Dependency Install') {
             steps {
                 dir('backend') {
-                    sh 'pip3 install -r requirements.txt'
+                    sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install -r requirements.txt
+                    '''
                 }
             }
         }
