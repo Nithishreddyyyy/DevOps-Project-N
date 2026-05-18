@@ -1,7 +1,0 @@
-fastapi
-uvicorn[standard]
-motor
-reportlab
-jinja2
-python-multipart
-pydantic
