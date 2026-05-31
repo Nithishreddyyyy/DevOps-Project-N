@@ -144,7 +144,7 @@ Defined in `app/config/database.py`:
 - `faculty`
 - `criteria`
 - `scores`
-- `documents_metadata` (currently defined, not actively used in routes)
+- `documents_metadata` (currently defined)
 
 ## Local Setup
 
