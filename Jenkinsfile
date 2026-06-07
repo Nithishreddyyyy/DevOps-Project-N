@@ -8,6 +8,8 @@ pipeline {
 
         DOCKER_CREDS = credentials('dockerhub-creds')
         SONAR_TOKEN = credentials('sonar-token')
+        
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN')
     }
 
     stages {
@@ -105,11 +107,14 @@ pipeline {
         stage('Deploy Frontend') {
             steps {
                 dir('frontend') {
-                    sh 'vercel --prod --yes'
+                    sh '''
+                    pwd
+                    ls -la
+                    vercel --prod --yes --token=$VERCEL_TOKEN
+                    '''
                 }
             }
         }
-    }
 
     post {
 
