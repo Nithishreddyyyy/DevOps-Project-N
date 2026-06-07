@@ -109,17 +109,18 @@ pipeline {
                 dir('frontend') {
                     sh '''
                     rm -rf .vercel
-                
+        
+                    yes | vercel link \
+                      --token=$VERCEL_TOKEN || true
+        
                     vercel deploy \
                       --prod \
                       --yes \
-                      --token=$VERCEL_TOKEN \
-                      --name devops-project-frontend-7th-june
+                      --token=$VERCEL_TOKEN
                     '''
                 }
             }
         }
-    }
     post {
 
         success {
