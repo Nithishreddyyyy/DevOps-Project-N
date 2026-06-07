@@ -105,7 +105,7 @@ pipeline {
 
         stage('Dep') {
             steps {
-                sh 'vercel --prod .'
+                sh 'vercel --prod . --yes'
             }
         }
     }
