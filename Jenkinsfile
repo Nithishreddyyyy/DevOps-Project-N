@@ -102,10 +102,11 @@ pipeline {
                 echo 'Deployment handled through Vercel and Render auto deployment'
             }
         }
-
-        stage('Dep') {
+        stage('Deploy Frontend') {
             steps {
-                sh 'vercel --prod . --yes'
+                dir('frontend') {
+                    sh 'vercel --prod --yes'
+                }
             }
         }
     }
