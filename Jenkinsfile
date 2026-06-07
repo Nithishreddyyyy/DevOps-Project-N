@@ -114,7 +114,7 @@ pipeline {
                       --prod \
                       --yes \
                       --token=$VERCEL_TOKEN \
-                      --name devops-project-frontend
+                      --name devops-project-frontend-7th-june
                     '''
                 }
             }
