@@ -108,9 +108,8 @@ pipeline {
             steps {
                 dir('frontend') {
                     sh '''
-                    pwd
-                    ls -la
-                    vercel --prod --yes --token=$VERCEL_TOKEN
+                    rm -rf .vercel
+                    vercel deploy --prod --yes --token=$VERCEL_TOKEN
                     '''
                 }
             }
