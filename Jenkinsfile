@@ -102,6 +102,12 @@ pipeline {
                 echo 'Deployment handled through Vercel and Render auto deployment'
             }
         }
+
+        stage('Dep') {
+            steps {
+                sh 'vercel --prod .'
+            }
+        }
     }
 
     post {
