@@ -104,24 +104,24 @@ pipeline {
                 echo 'Deployment handled through Vercel and Render auto deployment'
             }
         }
-        stage('Deploy Frontend') {
-            steps {
-                dir('frontend') {
-                    sh '''
-                    rm -rf .vercel
+    //     stage('Deploy Frontend') {
+    //         steps {
+    //             dir('frontend') {
+    //                 sh '''
+    //                 rm -rf .vercel
         
-                    yes | vercel link \
-                      --token=$VERCEL_TOKEN || true
+    //                 yes | vercel link \
+    //                   --token=$VERCEL_TOKEN || true
         
-                    vercel deploy \
-                      --prod \
-                      --yes \
-                      --token=$VERCEL_TOKEN
-                    '''
-                }
-            }
-        }
-    }
+    //                 vercel deploy \
+    //                   --prod \
+    //                   --yes \
+    //                   --token=$VERCEL_TOKEN
+    //                 '''
+    //             }
+    //         }
+    //     }
+    // }
     post {
 
         success {
